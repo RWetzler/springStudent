@@ -3,9 +3,32 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Add a Student!</title>
+<script type = "text/javascript">
+
+function checkForm(myForm) {
+	if( myForm.name.value == "" ) {
+        alert( "Please provide your name!" );
+        myForm.name.focus();
+        return false;
+     }
+	if( myForm.grade.value == "" ) {
+        alert( "Please provide your Grade!" );
+        myForm.grade.focus();
+        return false;
+     }
+	var re = /^[\w ]+$/;
+	if(!re.test(myForm.name.value)) {
+	      alert("Error: Input contains invalid characters!");
+	      myForm.name.focus();
+	      return false;
+	    }
+	return true;
+}
+
+</script>
 </head>
 <body>
-<form th:object="${newStudent}" th:action="@{/update/{id}(id=${newStudent.id})}" method='POST'>
+<form th:object="${newStudent}" th:action="@{/update/{id}(id=${newStudent.id})}" name = "myForm" method='POST' onsubmit = "return checkForm(this)">
 Name: <input name="name" size="20" th:field="*{name}"> <br />
 Grade: <input name="relationship" size="10" th:field="*{grade}"><br />
 <input name="submit" type="submit" value="submit" />
